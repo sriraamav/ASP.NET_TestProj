@@ -63,7 +63,8 @@ namespace WebApplication1.Models
             }
         }
 
-        // READ one by ID (still using plain SQL)
+        // READ one by ID 
+
         public Employee? GetEmployeeById(int id)
         {
             Employee? emp = null;
@@ -71,10 +72,11 @@ namespace WebApplication1.Models
             using (var conn = new MySqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT * FROM employee_db WHERE id = @Id";
-                using (var cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand("GetEmployeeById", conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@emp_id", id);
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -94,6 +96,7 @@ namespace WebApplication1.Models
 
             return emp;
         }
+
 
         // UPDATE using stored procedure
         public void EditEmployee(Employee emp)

@@ -74,6 +74,12 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE GetEmployeeById(IN emp_id INT)
+BEGIN
+    SELECT * FROM employee_db WHERE id = emp_id;
+END //
+DELIMITER ;
 
 
 
